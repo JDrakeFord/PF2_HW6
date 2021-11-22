@@ -5,6 +5,7 @@
 #include "Expression.h"
 #include <iostream>
 #include <stack>
+#include <sstream>
 
 using namespace std;
 //Defualt constructor, sets all fields to either blank, false, or Bad.
@@ -20,6 +21,56 @@ Expression::Expression(const string &s) {
     set(s);
 }
 
+
+int Expression::evaluate() const {
+    stack<Token> eval;
+    for(int i = 0; i < postfix.size(); i++)
+    {
+        if(postfix[i].get_type() == Token::Integer)
+        {
+            eval.push(postfix[i]);
+        }
+        else if(postfix[i].get_type() == Token::Operators)
+        {
+            int a = eval.top().value();
+            eval.pop();
+            int b = eval.top().value();
+            eval.pop();
+            switch(postfix[i].get_token()[0])
+            {
+                case '+': {
+                    stringstream ss;
+                    ss << (a + b);
+                    Token temp(ss.str());
+                    eval.push(temp);
+                    break;
+                }
+                case '-': {
+                    stringstream ss;
+                    ss << (a - b);
+                    Token temp(ss.str());
+                    eval.push(temp);
+                    break;
+                }
+                case '*': {
+                    stringstream ss;
+                    ss << (a * b);
+                    Token temp(ss.str());
+                    eval.push(temp);
+                    break;
+                }
+                case '/': {
+                    stringstream ss;
+                    ss << (a / b);
+                    Token temp(ss.str());
+                    eval.push(temp);
+                    break;
+                }
+            }
+        }
+    }
+    return eval.top().value();
+}
 //This is the function that sets the fields for Expression.
 void Expression::set(const string &s) {
     bool firstCharFound = false;

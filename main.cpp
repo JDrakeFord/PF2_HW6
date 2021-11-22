@@ -17,7 +17,13 @@ int main() {
         switch(choice[0])
         {
             case '=':
-                cout << "Chosen evaluation" << endl; break;
+                cout << "Chosen evaluation" << endl;
+                for(int i = 0; i < seq.getSequence().size(); i++)
+                {
+                    cout << seq.getSequence()[i].get_original() << " = " <<
+                    seq.getSequence()[i].evaluate() << endl;
+                }
+                break;
             case '>':
                 cout << "Chosen prefix" << endl; break;
             case '<':
