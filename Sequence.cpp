@@ -33,6 +33,12 @@ int Sequence::getSize() {
     return size;
 }
 
+void Sequence::clear() {
+    sequence.clear();
+    size = 0;
+    orig = "";
+}
+
 void Sequence::append(string input) {
     orig += input;
     int start = 0;

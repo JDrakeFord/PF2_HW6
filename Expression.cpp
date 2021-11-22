@@ -126,6 +126,10 @@ void Expression::setPostfix() {
     }
 }
 
+vector<Token> Expression::get_postfix() const {
+    return postfix;
+}
+
 void Expression::setType() {
     for(int i = 0; i < tokenized.size(); i++)
     {

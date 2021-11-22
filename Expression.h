@@ -18,6 +18,7 @@ public:
     void display() const;
     string get_original() const;
     vector<Token> get_tokenized() const;
+    vector<Token> get_postfix() const;
 
 private:
     string original;

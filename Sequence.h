@@ -15,6 +15,7 @@ public:
     vector<Expression> getSequence();
     void append(string input);
     string getOrig();
+    void clear();
 private:
     string orig;
     int size;
