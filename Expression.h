@@ -26,6 +26,8 @@ private:
     bool valid;
     Exp_type type;
     string type_to_string(Exp_type type) const;
+    void setType();
+    void setPostfix();
 
 };
 

@@ -40,21 +40,8 @@ int main() {
         }
     }
      */
-    Sequence test("2+4;9+5;a+b;");
-    vector<Expression> testList = test.getSequence();
-    cout << test.getSize() << endl;
-    for(int i = 0; i < test.getSize(); i++)
-    {
-        testList[i].display();
-        cout << endl;
-    }
-    test.append("8+7;d+e;");
-    cout << test.getOrig() << endl;
-    testList = test.getSequence();
-    for(int i = 0; i < test.getSize(); i++)
-    {
-        testList[i].display();
-        cout << endl;
-    }
+    Expression a("a+b/c");
+    a.display();
+
     return 0;
 }

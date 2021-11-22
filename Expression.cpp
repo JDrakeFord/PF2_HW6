@@ -4,6 +4,7 @@
 
 #include "Expression.h"
 #include <iostream>
+#include <stack>
 
 using namespace std;
 //Defualt constructor, sets all fields to either blank, false, or Bad.
@@ -78,8 +79,61 @@ void Expression::set(const string &s) {
 
 
     }
-    type = Bad;
-    valid = false;
+    setType();
+    setPostfix();
+    //TODO SET VALID - CURRENTLY HARD CODED
+    valid = true;
+}
+
+void Expression::setPostfix() {
+    postfix.clear();
+    stack<Token> ops;
+
+    for(int i = 0; i < tokenized.size(); i++)
+    {
+        if(tokenized[i].get_type() == Token::Identifier ||
+           tokenized[i].get_type() == Token::Integer)
+        {
+            postfix.push_back(tokenized[i]);
+        }
+        else if(tokenized[i].get_type() == Token::OpenBrace)
+        {
+            ops.push(tokenized[i]);
+        }
+        else if(tokenized[i].get_type() == Token::CloseBrace)
+        {
+            while(ops.top().get_type() != Token::OpenBrace)
+            {
+                postfix.push_back(ops.top());
+                ops.pop();
+            }
+            ops.pop();
+        }
+        else
+        {
+            while(!ops.empty() && ops.top().get_priority() >= tokenized[i].get_priority())
+            {
+                postfix.push_back(ops.top());
+                ops.pop();
+            }
+            ops.push(tokenized[i]);
+        }
+    }
+    while(!ops.empty())
+    {
+        postfix.push_back(ops.top());
+        ops.pop();
+    }
+}
+
+void Expression::setType() {
+    for(int i = 0; i < tokenized.size(); i++)
+    {
+        if(tokenized[i].get_type() == Token::Operators)
+            type = Arithmetic;
+        else if(tokenized[i].get_type() == Token::EqualSign)
+            type = Assignment;
+    }
 }
 
 //This is the getter for the tokenized vector.
@@ -109,7 +163,12 @@ void Expression::display() const {
     }
     cout << endl;
     cout << "number of tokens = " << tokenized.size() << endl;
-    cout << "postfix = " << endl; // we do not use postfix in this assignment.
+    cout << "postfix = ";
+    for(int i = 0; i < postfix.size(); i++)
+    {
+        cout << postfix[i].get_token() << ";";
+    }
+    cout << endl;
     cout << "valid = ";
     //We want to output "true" or "false", not '1' or '0'
     if(valid)
