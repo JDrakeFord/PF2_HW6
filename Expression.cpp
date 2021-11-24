@@ -32,37 +32,29 @@ int Expression::evaluate() const {
         }
         else if(postfix[i].get_type() == Token::Operators)
         {
-            int a = eval.top().value();
-            eval.pop();
             int b = eval.top().value();
+            eval.pop();
+            int a = eval.top().value();
             eval.pop();
             switch(postfix[i].get_token()[0])
             {
                 case '+': {
-                    stringstream ss;
-                    ss << (a + b);
-                    Token temp(ss.str());
+                    Token temp((a+b));
                     eval.push(temp);
                     break;
                 }
                 case '-': {
-                    stringstream ss;
-                    ss << (a - b);
-                    Token temp(ss.str());
+                    Token temp((a-b));
                     eval.push(temp);
                     break;
                 }
                 case '*': {
-                    stringstream ss;
-                    ss << (a * b);
-                    Token temp(ss.str());
+                    Token temp((a*b));
                     eval.push(temp);
                     break;
                 }
                 case '/': {
-                    stringstream ss;
-                    ss << (a / b);
-                    Token temp(ss.str());
+                    Token temp((a/b));
                     eval.push(temp);
                     break;
                 }

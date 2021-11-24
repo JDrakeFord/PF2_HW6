@@ -6,12 +6,22 @@
 #include <iostream>
 #include <string>
 #include <cstdio>
+#include <sstream>
 
 using namespace std;
 
 Token::Token(string s)
 {
     set(s);
+}
+
+Token::Token(int a)
+{
+    type = Integer;
+    stringstream ss;
+    ss << a;
+    token = ss.str();
+    priority = -1;
 }
 
 //Defualt constructor. Sets each variable per instructions

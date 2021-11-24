@@ -20,6 +20,7 @@ public:
     Token_type get_type() const;
     string get_token() const;
     int get_priority() const;
+    Token(int a);
 private:
     Token_type type;
     string token;

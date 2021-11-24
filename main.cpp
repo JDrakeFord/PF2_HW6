@@ -2,6 +2,8 @@
 #include "Sequence.h"
 using namespace std;
 int main() {
+    Token test("-82");
+    test.display();
     cout << "=== expression evaluation program starts ===" << endl;
     cout << "input:";
     string input;
