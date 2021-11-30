@@ -2,8 +2,6 @@
 #include "Sequence.h"
 using namespace std;
 int main() {
-    Token test("-82");
-    test.display();
     cout << "=== expression evaluation program starts ===" << endl;
     cout << "input:";
     string input;
@@ -27,7 +25,16 @@ int main() {
                 }
                 break;
             case '>':
-                cout << "Chosen prefix" << endl; break;
+                cout << "Chosen prefix" << endl;
+                for(int i = 0; i < seq.getSequence().size(); i++)
+                {
+                    for(int k = 0; k < seq.getSequence()[i].get_prefix().size(); k++)
+                    {
+                        cout << seq.getSequence()[i].get_prefix()[k].get_token() << " ";
+                    }
+                    cout << endl;
+                }
+                break;
             case '<':
                 cout << "Chosen postfix" << endl;
                 for(int i = 0; i < seq.getSequence().size(); i++)
@@ -40,7 +47,13 @@ int main() {
                 }
                 break;
             case 'f':
-                cout << "Chosen fully parenthesized." << endl; break;
+                cout << "Chosen fully parenthesized." << endl;
+                for(int i = 0; i < seq.getSequence().size(); i++)
+                {
+                    cout << seq.getSequence()[i].get_original() << " fully parenthesized is ";
+                    seq.getSequence()[i].fullParen();
+                }
+                break;
             case 'q':
                 exit = true; cout << "Chosen exit" << endl; break;
             case 'c':

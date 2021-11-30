@@ -19,12 +19,17 @@ public:
     string get_original() const;
     vector<Token> get_tokenized() const;
     vector<Token> get_postfix() const;
+    vector<Token> get_prefix() const;
     int evaluate() const;
+    void setValid();
+    void setPrefix();
+    void fullParen();
 
 private:
     string original;
     vector<Token> tokenized;
     vector<Token> postfix;
+    vector<Token> prefix;
     bool valid;
     Exp_type type;
     string type_to_string(Exp_type type) const;

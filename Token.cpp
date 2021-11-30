@@ -159,7 +159,6 @@ void Token::set(string s)
     else
         priority = -1;
 }
-
 int Token::value() const {
     if(type == Identifier)
         return -1;
