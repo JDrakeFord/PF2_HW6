@@ -62,6 +62,7 @@ void Expression::fullParen() {
         if(postfix[i].get_type() == Token::Operators)
             numOperators++;
     }
+
     for(int i = 0; i < size; i++)
     {
         string tokenTemp;
