@@ -35,13 +35,20 @@ void Expression::setPrefix() {
             ops.pop();
             string b = ops.top();
             ops.pop();
-            ops.push(postfix[i].get_token() + b + a);
+            ops.push(postfix[i].get_token() + " " + b +  " " + a);
         }
     }
     string temp;
     while(!ops.empty())
     {
+        prefix.push_back(ops.top());
+        ops.pop();
+    }
+    /*
+    while(!ops.empty())
+    {
         temp += ops.top();
+        temp += " ";
         ops.pop();
     }
     for(int i = 0; i < temp.length(); i++)
@@ -49,7 +56,7 @@ void Expression::setPrefix() {
         string temp2 = "";
         temp2 += temp[i];
         prefix.push_back(temp2);
-    }
+    } */
 }
 
 void Expression::fullParen() {

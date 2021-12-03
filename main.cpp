@@ -46,26 +46,35 @@ int main() {
             case '>':
                 for(int i = 0; i < seq.getSequence().size(); i++)
                 {
-                    for(int k = 0; k < seq.getSequence()[i].get_prefix().size(); k++)
+                    if(seq.getSequence()[i].getType() != Expression::Arithmetic)
+                        cout << "No prefix of " << seq.getSequence()[i].get_original() << ", which is assignment, not arithmetic." << endl;
+                    else
                     {
-                        if(seq.getSequence()[i].getType() == Expression::Arithmetic)
-                             cout <<  seq.getSequence()[i].get_prefix()[k].get_token() << " ";
-                    }
-                    if(seq.getSequence()[i].getType() == Expression::Arithmetic)
+                        cout << "Prefix of " << seq.getSequence()[i].get_original() << " = ";
+                        for(int k = 0; k < seq.getSequence()[i].get_prefix().size(); k++)
+                        {
+                            if(seq.getSequence()[i].getType() == Expression::Arithmetic)
+                                cout <<  seq.getSequence()[i].get_prefix()[k].get_token() << " ";
+                        }
                         cout << endl;
+                    }
                 }
                 break;
             case '<':
                 for(int i = 0; i < seq.getSequence().size(); i++)
                 {
-                    cout << "Postfix of " << seq.getSequence()[i].get_original() << " = ";
-                    for(int k = 0; k < seq.getSequence()[i].get_postfix().size(); k++)
+                    if(seq.getSequence()[i].getType() != Expression::Arithmetic)
+                        cout << "No postfix of " << seq.getSequence()[i].get_original() << ", which is assignment, not arithmetic." << endl;
+                    else
                     {
-                        if(seq.getSequence()[i].getType() == Expression::Arithmetic)
-                            cout << seq.getSequence()[i].get_postfix()[k].get_token() << " ";
-                    }
-                    if(seq.getSequence()[i].getType() == Expression::Arithmetic)
+                        cout << "Postfix of " << seq.getSequence()[i].get_original() << " = ";
+                        for(int k = 0; k < seq.getSequence()[i].get_postfix().size(); k++)
+                        {
+                            if(seq.getSequence()[i].getType() == Expression::Arithmetic)
+                                cout <<  seq.getSequence()[i].get_postfix()[k].get_token() << " ";
+                        }
                         cout << endl;
+                    }
                 }
                 break;
             case 'f':
@@ -78,7 +87,7 @@ int main() {
                     }
                     else if(seq.getSequence()[i].getType() == Expression::Assignment)
                     {
-                        cout << "Cannot parenthesize " << seq.getSequence()[i].get_original() << ", which is assignment" << endl;
+                        cout << "Cannot parenthesize " << seq.getSequence()[i].get_original() << ", which is assignment, not arithmetic." << endl;
                     }
                 }
                 break;

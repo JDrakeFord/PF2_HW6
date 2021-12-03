@@ -11,7 +11,7 @@
 
 class Sequence {
 public:
-    Sequence(string input);
+    Sequence(string &input);
     int getSize();
     vector<Expression> getSequence();
     void append(string input);
@@ -24,6 +24,7 @@ private:
     vector<Expression> sequence;
     map<string, int> variables;
     void assignVariables();
+    void set(string &input);
 
 
 };

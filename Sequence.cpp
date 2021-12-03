@@ -6,26 +6,39 @@
 #include "Expression.h"
 #include <map>
 #include <sstream>
+#include <iostream>
 
-Sequence::Sequence(string input) {
+Sequence::Sequence(string &input) {
+    set(input);
+}
+
+void Sequence::set(string &input) {
+    bool flag = false;
     orig = input;
     size = 0;
     int start = 0;
     for(int i = 0; i < input.length(); i++)
     {
-        if(input[i] == ';' && i != input.length() - 1)
+        if(input[i] == ';')
         {
             sequence.push_back(input.substr(start, i - start));
             start = i + 1;
             size++;
         }
-        else if(i == input.length() - 1)
+        else if(i == input.length() - 1 && input[i] != ';')
         {
-            sequence.push_back(input.substr(start, i - start));
-            size++;
+            std::cout << "Sorry! That input wasn't valid. Be sure to include a semicolon after each expression." << endl << "input:";
+            clear();
+            getline(cin, input);
+            set(input);
+            flag = true;
+            break;
         }
     }
-    assignVariables();
+    if(!flag)
+    {
+        assignVariables();
+    }
 }
 
 void Sequence::assignVariables() {
@@ -34,8 +47,8 @@ void Sequence::assignVariables() {
         if(sequence[i].getType() == Expression::Assignment)
         {
             int p;
-            std::istringstream(sequence[i].get_original().substr(2, 1))  >> p;
-            variables.insert(variables.begin(), std::pair<string, int>(sequence[i].get_original().substr(0, 1), p));
+            std::istringstream(sequence[i].get_original().substr(sequence[i].get_tokenized()[0].get_token().length() + 1))  >> p;
+            variables.insert(variables.begin(), std::pair<string, int>(sequence[i].get_tokenized()[0].get_token().substr(0, sequence[i].get_tokenized()[0].get_token().length()), p));
         }
     }
 }
