@@ -44,22 +44,21 @@ int main() {
                 }
                 break;
             case '>':
-                cout << "Chosen prefix" << endl;
                 for(int i = 0; i < seq.getSequence().size(); i++)
                 {
                     for(int k = 0; k < seq.getSequence()[i].get_prefix().size(); k++)
                     {
                         if(seq.getSequence()[i].getType() == Expression::Arithmetic)
-                            cout << seq.getSequence()[i].get_prefix()[k].get_token() << " ";
+                             cout <<  seq.getSequence()[i].get_prefix()[k].get_token() << " ";
                     }
                     if(seq.getSequence()[i].getType() == Expression::Arithmetic)
                         cout << endl;
                 }
                 break;
             case '<':
-                cout << "Chosen postfix" << endl;
                 for(int i = 0; i < seq.getSequence().size(); i++)
                 {
+                    cout << "Postfix of " << seq.getSequence()[i].get_original() << " = ";
                     for(int k = 0; k < seq.getSequence()[i].get_postfix().size(); k++)
                     {
                         if(seq.getSequence()[i].getType() == Expression::Arithmetic)
@@ -70,13 +69,16 @@ int main() {
                 }
                 break;
             case 'f':
-                cout << "Chosen fully parenthesized." << endl;
                 for(int i = 0; i < seq.getSequence().size(); i++)
                 {
                     if(seq.getSequence()[i].getType() == Expression::Arithmetic)
                     {
                         cout << seq.getSequence()[i].get_original() << " fully parenthesized is ";
                         seq.getSequence()[i].fullParen();
+                    }
+                    else if(seq.getSequence()[i].getType() == Expression::Assignment)
+                    {
+                        cout << "Cannot parenthesize " << seq.getSequence()[i].get_original() << ", which is assignment" << endl;
                     }
                 }
                 break;
