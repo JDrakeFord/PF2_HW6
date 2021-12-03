@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include "Token.h"
+#include <map>
 
 using namespace std;
 class Expression {
@@ -20,8 +21,10 @@ public:
     vector<Token> get_tokenized() const;
     vector<Token> get_postfix() const;
     vector<Token> get_prefix() const;
-    int evaluate() const;
-    void setValid();
+    Exp_type getType();
+    int evaluate(bool &complete, map<string, int> variables) const;
+
+    bool setValid();
     void setPrefix();
     void fullParen();
 
@@ -35,6 +38,7 @@ private:
     string type_to_string(Exp_type type) const;
     void setType();
     void setPostfix();
+    void setVariables();
 
 };
 

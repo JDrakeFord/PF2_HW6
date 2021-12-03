@@ -7,6 +7,7 @@
 #include <list>
 #include "Expression.h"
 #include "Token.h"
+#include <map>
 
 class Sequence {
 public:
@@ -16,10 +17,14 @@ public:
     void append(string input);
     string getOrig();
     void clear();
+    map<string, int> getMap();
 private:
     string orig;
     int size;
     vector<Expression> sequence;
+    map<string, int> variables;
+    void assignVariables();
+
 
 };
 

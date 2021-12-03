@@ -4,6 +4,8 @@
 
 #include "Sequence.h"
 #include "Expression.h"
+#include <map>
+#include <sstream>
 
 Sequence::Sequence(string input) {
     orig = input;
@@ -23,6 +25,23 @@ Sequence::Sequence(string input) {
             size++;
         }
     }
+    assignVariables();
+}
+
+void Sequence::assignVariables() {
+    for(int i = 0; i < sequence.size(); i++)
+    {
+        if(sequence[i].getType() == Expression::Assignment)
+        {
+            int p;
+            std::istringstream(sequence[i].get_original().substr(2, 1))  >> p;
+            variables.insert(variables.begin(), std::pair<string, int>(sequence[i].get_original().substr(0, 1), p));
+        }
+    }
+}
+
+map<string, int> Sequence::getMap() {
+    return variables;
 }
 
 vector<Expression> Sequence::getSequence() {

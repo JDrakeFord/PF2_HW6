@@ -94,7 +94,7 @@ void Expression::fullParen() {
     cout << endl;
 }
 
-void Expression::setValid() {
+bool Expression::setValid() {
     enum States {expect_operand, expect_operator, done};
     bool eqtrue = false;
     States state = expect_operand;
@@ -163,15 +163,12 @@ void Expression::setValid() {
     if(!valid)
     {
         type = Expression::Bad;
-        cout << "TYPE SET TO BAD" << endl;
     }
+    return valid;
+
 }
 
-
-
-
-
-int Expression::evaluate() const {
+int Expression::evaluate(bool &complete, map<string, int> variables) const {
     stack<Token> eval;
     for(int i = 0; i < postfix.size(); i++)
     {
@@ -209,9 +206,26 @@ int Expression::evaluate() const {
                 }
             }
         }
+        else if(postfix[i].get_type() == Token::Identifier)
+        {
+            if(variables.find(postfix[i].get_token()) != variables.end())
+            {
+                eval.push(variables.find(postfix[i].get_token())->second);
+            }
+            else
+            {
+                complete = false;
+                return 0;
+            }
+        }
     }
     return eval.top().value();
 }
+
+Expression::Exp_type Expression::getType() {
+    return type;
+}
+
 //This is the function that sets the fields for Expression.
 void Expression::set(const string &s) {
     bool firstCharFound = false;
@@ -270,8 +284,11 @@ void Expression::set(const string &s) {
             tokenized.push_back(s.substr(tokenStart, (i - tokenStart + 1)));
     }
     setValid();
-    setPostfix();
-    setPrefix();
+    if(valid)
+    {
+        setPostfix();
+        setPrefix();
+    }
 }
 
 vector<Token> Expression::get_prefix() const {

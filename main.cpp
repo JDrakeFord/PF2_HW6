@@ -20,8 +20,27 @@ int main() {
                 cout << "Chosen evaluation" << endl;
                 for(int i = 0; i < seq.getSequence().size(); i++)
                 {
-                    cout << seq.getSequence()[i].get_original() << " = " <<
-                    seq.getSequence()[i].evaluate() << endl;
+                    if(seq.getSequence()[i].setValid() && seq.getSequence()[i].getType() == Expression::Arithmetic)
+                    {
+                        bool complete = true;
+                        int result = seq.getSequence()[i].evaluate(complete, seq.getMap());
+                        if(complete)
+                        {
+                            cout << seq.getSequence()[i].get_original() << " = " << result << endl;
+                        }
+                        else
+                        {
+                            cout << "Sorry, not all variables are assigned for " << seq.getSequence()[i].get_original() << endl;
+                        }
+                    }
+                    else if(!seq.getSequence()[i].setValid())
+                    {
+                        cout << "Sorry! " << seq.getSequence()[i].get_original() << " is not a valid expression!" << endl;
+                    }
+                    else if(seq.getSequence()[i].getType() == Expression::Assignment)
+                    {
+                        cout << "Cannot evaluate " << seq.getSequence()[i].get_original() << " which is assignment" << endl;
+                    }
                 }
                 break;
             case '>':
