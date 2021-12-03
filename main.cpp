@@ -49,9 +49,11 @@ int main() {
                 {
                     for(int k = 0; k < seq.getSequence()[i].get_prefix().size(); k++)
                     {
-                        cout << seq.getSequence()[i].get_prefix()[k].get_token() << " ";
+                        if(seq.getSequence()[i].getType() == Expression::Arithmetic)
+                            cout << seq.getSequence()[i].get_prefix()[k].get_token() << " ";
                     }
-                    cout << endl;
+                    if(seq.getSequence()[i].getType() == Expression::Arithmetic)
+                        cout << endl;
                 }
                 break;
             case '<':
@@ -60,17 +62,22 @@ int main() {
                 {
                     for(int k = 0; k < seq.getSequence()[i].get_postfix().size(); k++)
                     {
-                        cout << seq.getSequence()[i].get_postfix()[k].get_token() << " ";
+                        if(seq.getSequence()[i].getType() == Expression::Arithmetic)
+                            cout << seq.getSequence()[i].get_postfix()[k].get_token() << " ";
                     }
-                    cout << endl;
+                    if(seq.getSequence()[i].getType() == Expression::Arithmetic)
+                        cout << endl;
                 }
                 break;
             case 'f':
                 cout << "Chosen fully parenthesized." << endl;
                 for(int i = 0; i < seq.getSequence().size(); i++)
                 {
-                    cout << seq.getSequence()[i].get_original() << " fully parenthesized is ";
-                    seq.getSequence()[i].fullParen();
+                    if(seq.getSequence()[i].getType() == Expression::Arithmetic)
+                    {
+                        cout << seq.getSequence()[i].get_original() << " fully parenthesized is ";
+                        seq.getSequence()[i].fullParen();
+                    }
                 }
                 break;
             case 'q':
@@ -88,6 +95,7 @@ int main() {
                 getline(cin, input);
                 seq.clear();
                 seq.append(input);
+                seq.getMap().clear();
                 break;
             default:
                 cout << "Sorry! That was not valid input" << endl; break;

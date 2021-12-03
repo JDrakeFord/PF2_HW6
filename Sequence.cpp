@@ -75,6 +75,7 @@ void Sequence::append(string input) {
             size++;
         }
     }
+    assignVariables();
 }
 
 string Sequence::getOrig() {
