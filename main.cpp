@@ -25,14 +25,19 @@ int main() {
                     if(seq.getSequence()[i].setValid() && seq.getSequence()[i].getType() == Expression::Arithmetic)
                     {
                         bool complete = true;
-                        int result = seq.getSequence()[i].evaluate(complete, seq.getMap());
-                        if(complete)
-                        {
-                            cout << seq.getSequence()[i].get_original() << " = " << result << endl;
+                        try{
+                            int result = seq.getSequence()[i].evaluate(complete, seq.getMap());
+                            if(complete)
+                            {
+                                cout << seq.getSequence()[i].get_original() << " = " << result << endl;
+                            }
+                            else
+                            {
+                                cout << seq.getSequence()[i].get_original() << " no result, some variable has undefined value." << result << endl;
+                            }
                         }
-                        else
-                        {
-                            cout << seq.getSequence()[i].get_original() << " no result, some variable has undefined value." << result << endl;
+                        catch(runtime_error &e){
+                            cout << "Cannot evaluate " << seq.getSequence()[i].get_original() << ", divide by 0 error!" << endl;
                         }
                     }
                     else if(!seq.getSequence()[i].setValid())

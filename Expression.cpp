@@ -5,6 +5,7 @@
 #include "Expression.h"
 #include <iostream>
 #include <stack>
+#include <stdexcept>
 #include <sstream>
 
 using namespace std;
@@ -198,6 +199,10 @@ int Expression::evaluate(bool &complete, map<string, int> variables) const {
                     break;
                 }
                 case '/': {
+                    if(b == 0)
+                    {
+                        throw runtime_error("Divide by zero error!\n");
+                    }
                     Token temp(a/b);
                     eval.push(temp);
                     break;
