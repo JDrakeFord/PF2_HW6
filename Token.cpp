@@ -48,6 +48,8 @@ string Token::type_to_string(Token_type t) const {
         return "Close Brace";
     else if(t == INVALID)
         return "INVALID";
+    else
+        return "INVALID";
 }
 
 //Getter for the priority variable
@@ -78,7 +80,7 @@ void Token::setType(string s) {
     //For every character in the string
     if(s[0] == '0'&& s.length() > 1)
         isInteger = false;
-    for(int i = 0; i < s.length(); i++)
+    for(unsigned int i = 0; i < s.length(); i++)
     {
         //If it is not a digit, then it is not an integer
         if(!isdigit(s[i]))
@@ -101,7 +103,7 @@ void Token::setType(string s) {
     if(isdigit(s[0]))
         isIdentifier = false;
     //For every character in the string
-    for(int i = 0; i < s.length(); i++)
+    for(unsigned int i = 0; i < s.length(); i++)
     {
         //If it is not a letter or number, it is invalid
         if(!isalnum(s[i]))

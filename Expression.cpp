@@ -23,7 +23,7 @@ Expression::Expression(const string &s) {
 
 void Expression::setPrefix() {
     stack<string> ops;
-    for(int i = 0; i < postfix.size(); i++)
+    for(unsigned int i = 0; i < postfix.size(); i++)
     {
         if(postfix[i].get_type() == Token::Integer || postfix[i].get_type() == Token::Identifier)
         {
@@ -51,7 +51,7 @@ void Expression::setPrefix() {
         temp += " ";
         ops.pop();
     }
-    for(int i = 0; i < temp.length(); i++)
+    for(unsigned int i = 0; i < temp.length(); i++)
     {
         string temp2 = "";
         temp2 += temp[i];
@@ -63,7 +63,7 @@ void Expression::fullParen() {
     vector<string> postfixString;
     int size = postfix.size();
     int numOperators = 0;
-    for(int i = 0; i < postfix.size(); i++)
+    for(unsigned int i = 0; i < postfix.size(); i++)
     {
         postfixString.push_back(postfix[i].get_token());
         if(postfix[i].get_type() == Token::Operators)
@@ -94,7 +94,7 @@ void Expression::fullParen() {
                 break;
         }
     }
-    for(int i = 0; i < postfixString.size(); i++)
+    for(unsigned int i = 0; i < postfixString.size(); i++)
     {
         cout << postfixString[i];
     }
@@ -109,7 +109,7 @@ bool Expression::setValid() {
     valid = true;
     int tokenCount = 0;
 
-    while(state != done && tokenCount < tokenized.size())
+    while(state != done && tokenCount < (int)tokenized.size())
     {
         Token t = tokenized[tokenCount];
         tokenCount++;
@@ -177,7 +177,7 @@ bool Expression::setValid() {
 
 int Expression::evaluate(bool &complete, map<string, int> variables) const {
     stack<Token> eval;
-    for(int i = 0; i < postfix.size(); i++)
+    for(unsigned int i = 0; i < postfix.size(); i++)
     {
         if(postfix[i].get_type() == Token::Integer)
         {
@@ -242,7 +242,7 @@ void Expression::set(const string &s) {
     //Loop through string
     tokenized.clear();
 
-    for(int i = 0; i < s.length(); i++)
+    for(unsigned int i = 0; i < s.length(); i++)
     {
         //We don't need to make a token if we hit a space but have not found a character
         if(s[i] == ' ' && !firstCharFound)
@@ -252,7 +252,7 @@ void Expression::set(const string &s) {
             firstCharFound = true;
         //If we find a space and have found a character and we have more than one character
         //to tokenize, then we make a token out of the previous characters and skip over the space
-        if(s[i] == ' ' && firstCharFound && i != tokenStart)
+        if(s[i] == ' ' && firstCharFound && (int)i != tokenStart)
         {
             tokenized.push_back(s.substr(tokenStart, (i - tokenStart)));
             tokenStart = i + 1;
@@ -260,7 +260,7 @@ void Expression::set(const string &s) {
         //If we find a space, have found a character, but tokenStart is already at the space
         //(this can happen if a token was just created but not triggered by a space)
         //then we need to skip over the space.
-        if(s[i] == ' ' && firstCharFound && i == tokenStart)
+        if(s[i] == ' ' && firstCharFound && (int)i == tokenStart)
         {
             tokenStart = i + 1;
         }
@@ -270,7 +270,7 @@ void Expression::set(const string &s) {
         {
             //If we need to create two tokens, one for what came before and one for the
             //special character, then we create two tokens
-            if(tokenStart != i)
+            if(tokenStart != (int)i)
             {
                 tokenized.push_back(s.substr(tokenStart, (i - tokenStart)));
                 tokenized.push_back(s.substr(i, 1));
@@ -306,7 +306,7 @@ void Expression::setPostfix() {
     postfix.clear();
     stack<Token> ops;
 
-    for(int i = 0; i < tokenized.size(); i++)
+    for(unsigned int i = 0; i < tokenized.size(); i++)
     {
         if(tokenized[i].get_type() == Token::Identifier ||
            tokenized[i].get_type() == Token::Integer)
@@ -348,7 +348,7 @@ vector<Token> Expression::get_postfix() const {
 }
 
 void Expression::setType() {
-    for(int i = 0; i < tokenized.size(); i++)
+    for(unsigned int i = 0; i < tokenized.size(); i++)
     {
         if(tokenized[i].get_type() == Token::Operators)
             type = Arithmetic;
@@ -371,6 +371,8 @@ string Expression::type_to_string(Exp_type type) const {
         return "Arithmetic";
     else if(type == Assignment)
         return "Assignment";
+    else
+        return "Bad";
 }
 
 //This function displays each member variable of the expression
@@ -378,14 +380,14 @@ void Expression::display() const {
     cout << "original = " << original << endl;
     cout << "tokenized = ";
     //Output each token followed by ';' to signify the end of the token. New line after loop.
-    for(int i = 0; i < tokenized.size(); i++)
+    for(unsigned int i = 0; i < tokenized.size(); i++)
     {
         cout << tokenized[i].get_token() << ";";
     }
     cout << endl;
     cout << "number of tokens = " << tokenized.size() << endl;
     cout << "postfix = ";
-    for(int i = 0; i < postfix.size(); i++)
+    for(unsigned int i = 0; i < postfix.size(); i++)
     {
         cout << postfix[i].get_token() << ";";
     }

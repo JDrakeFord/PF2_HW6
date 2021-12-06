@@ -18,7 +18,7 @@ int main() {
         {
             case '=':
                 cout << "Chosen evaluation" << endl;
-                for(int i = 0; i < seq.getSequence().size(); i++)
+                for(unsigned int i = 0; i < seq.getSequence().size(); i++)
                 {
                     if(seq.getSequence()[i].setValid() && seq.getSequence()[i].getType() == Expression::Arithmetic)
                     {
@@ -30,55 +30,63 @@ int main() {
                         }
                         else
                         {
-                            cout << "Sorry, not all variables are assigned for " << seq.getSequence()[i].get_original() << endl;
+                            cout << seq.getSequence()[i].get_original() << " no result, some variable has undefined value." << result << endl;
                         }
                     }
                     else if(!seq.getSequence()[i].setValid())
                     {
-                        cout << "Sorry! " << seq.getSequence()[i].get_original() << " is not a valid expression!" << endl;
+                        cout << "Cannot evaluate " << seq.getSequence()[i].get_original() << ", which is an invalid expression." << endl;
                     }
                     else if(seq.getSequence()[i].getType() == Expression::Assignment)
                     {
-                        cout << "Cannot evaluate " << seq.getSequence()[i].get_original() << " which is assignment" << endl;
+                        cout << "Cannot evaluate " << seq.getSequence()[i].get_original() << " which is not an arithmetic expression, but assignment." << endl;
                     }
                 }
                 break;
             case '>':
-                for(int i = 0; i < seq.getSequence().size(); i++)
+                for(unsigned int i = 0; i < seq.getSequence().size(); i++)
                 {
-                    if(seq.getSequence()[i].getType() != Expression::Arithmetic)
+                    if(seq.getSequence()[i].getType() == Expression::Assignment)
                         cout << "No prefix of " << seq.getSequence()[i].get_original() << ", which is assignment, not arithmetic." << endl;
-                    else
+                    else if(seq.getSequence()[i].getType() == Expression::Arithmetic)
                     {
                         cout << "Prefix of " << seq.getSequence()[i].get_original() << " = ";
-                        for(int k = 0; k < seq.getSequence()[i].get_prefix().size(); k++)
+                        for(unsigned int k = 0; k < seq.getSequence()[i].get_prefix().size(); k++)
                         {
                             if(seq.getSequence()[i].getType() == Expression::Arithmetic)
                                 cout <<  seq.getSequence()[i].get_prefix()[k].get_token() << " ";
                         }
                         cout << endl;
                     }
+                    else
+                    {
+                        cout << "No prefix of " << seq.getSequence()[i].get_original() << ", which is an invalid expression." << endl;
+                    }
                 }
                 break;
             case '<':
-                for(int i = 0; i < seq.getSequence().size(); i++)
+                for(unsigned int i = 0; i < seq.getSequence().size(); i++)
                 {
-                    if(seq.getSequence()[i].getType() != Expression::Arithmetic)
+                    if(seq.getSequence()[i].getType() == Expression::Assignment)
                         cout << "No postfix of " << seq.getSequence()[i].get_original() << ", which is assignment, not arithmetic." << endl;
-                    else
+                    else if(seq.getSequence()[i].getType() == Expression::Arithmetic)
                     {
                         cout << "Postfix of " << seq.getSequence()[i].get_original() << " = ";
-                        for(int k = 0; k < seq.getSequence()[i].get_postfix().size(); k++)
+                        for(unsigned int k = 0; k < seq.getSequence()[i].get_postfix().size(); k++)
                         {
                             if(seq.getSequence()[i].getType() == Expression::Arithmetic)
                                 cout <<  seq.getSequence()[i].get_postfix()[k].get_token() << " ";
                         }
                         cout << endl;
                     }
+                    else
+                    {
+                        cout << "No postfix of " << seq.getSequence()[i].get_original() << ", which is an invalid expression." << endl;
+                    }
                 }
                 break;
-            case 'f':
-                for(int i = 0; i < seq.getSequence().size(); i++)
+                case 'f': case 'F':
+                for(unsigned int i = 0; i < seq.getSequence().size(); i++)
                 {
                     if(seq.getSequence()[i].getType() == Expression::Arithmetic)
                     {
@@ -89,18 +97,22 @@ int main() {
                     {
                         cout << "Cannot parenthesize " << seq.getSequence()[i].get_original() << ", which is assignment, not arithmetic." << endl;
                     }
+                    else if(seq.getSequence()[i].getType() == Expression::Bad)
+                    {
+                        cout << "Cannot parenthesize " << seq.getSequence()[i].get_original() << ", which is an invalid expression." << endl;
+                    }
                 }
                 break;
-            case 'q':
+                case 'q': case 'Q':
                 exit = true; cout << "Chosen exit" << endl; break;
-            case 'c':
+                case 'c': case 'C':
                 cout << "Chosen continue appending sequence" << endl;
                 cout << "input:";
                 getline(cin, toAppend);
                 seq.append(toAppend);
                 toAppend = "";
                 break;
-            case 's':
+                case 's': case 'S':
                 cout << "Chosen to start over inputting sequence" << endl;
                 cout << "input:";
                 getline(cin, input);
@@ -109,7 +121,7 @@ int main() {
                 seq.getMap().clear();
                 break;
             default:
-                cout << "Sorry! That was not valid input" << endl; break;
+                cout << "Wrong input for the action! Please type one of =, <, >, f(F), q(Q), c(C), s(S)" << endl; break;
         }
     }
 

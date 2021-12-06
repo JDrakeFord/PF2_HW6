@@ -17,7 +17,7 @@ void Sequence::set(string &input) {
     orig = input;
     size = 0;
     int start = 0;
-    for(int i = 0; i < input.length(); i++)
+    for(unsigned int i = 0; i < input.length(); i++)
     {
         if(input[i] == ';')
         {
@@ -42,7 +42,7 @@ void Sequence::set(string &input) {
 }
 
 void Sequence::assignVariables() {
-    for(int i = 0; i < sequence.size(); i++)
+    for(unsigned int i = 0; i < sequence.size(); i++)
     {
         if(sequence[i].getType() == Expression::Assignment)
         {
@@ -74,7 +74,7 @@ void Sequence::clear() {
 void Sequence::append(string input) {
     orig += input;
     int start = 0;
-    for(int i = 0; i < input.length(); i++)
+    for(unsigned int i = 0; i < input.length(); i++)
     {
         if(input[i] == ';' && i != input.length() - 1)
         {
