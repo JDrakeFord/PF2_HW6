@@ -10,12 +10,14 @@ int main() {
     string choice;
     bool exit = false;
     Sequence seq(input);
+    //While the user does not exit
     while(!exit)
     {
         cout << "action:";
         getline(cin, choice);
         switch(choice[0])
         {
+            //Evaluation case
             case '=':
                 cout << "Chosen evaluation" << endl;
                 for(unsigned int i = 0; i < seq.getSequence().size(); i++)
@@ -43,6 +45,7 @@ int main() {
                     }
                 }
                 break;
+                //Prefix case
             case '>':
                 for(unsigned int i = 0; i < seq.getSequence().size(); i++)
                 {
@@ -64,6 +67,7 @@ int main() {
                     }
                 }
                 break;
+                //Postfix case
             case '<':
                 for(unsigned int i = 0; i < seq.getSequence().size(); i++)
                 {
@@ -85,6 +89,7 @@ int main() {
                     }
                 }
                 break;
+                //Full parentheses case
                 case 'f': case 'F':
                 for(unsigned int i = 0; i < seq.getSequence().size(); i++)
                 {
@@ -103,8 +108,10 @@ int main() {
                     }
                 }
                 break;
+                //Quit case
                 case 'q': case 'Q':
                 exit = true; cout << "Chosen exit" << endl; break;
+                //Continue case
                 case 'c': case 'C':
                 cout << "Chosen continue appending sequence" << endl;
                 cout << "input:";
@@ -112,6 +119,7 @@ int main() {
                 seq.append(toAppend);
                 toAppend = "";
                 break;
+                //Start over case
                 case 's': case 'S':
                 cout << "Chosen to start over inputting sequence" << endl;
                 cout << "input:";

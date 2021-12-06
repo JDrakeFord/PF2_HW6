@@ -8,10 +8,12 @@
 #include <sstream>
 #include <iostream>
 
+//Sequence Constructor
 Sequence::Sequence(string &input) {
     set(input);
 }
 
+//Sets the sequence with initial input
 void Sequence::set(string &input) {
     bool flag = false;
     orig = input;
@@ -40,7 +42,7 @@ void Sequence::set(string &input) {
         assignVariables();
     }
 }
-
+//Assigns variables to the map
 void Sequence::assignVariables() {
     for(unsigned int i = 0; i < sequence.size(); i++)
     {
@@ -53,24 +55,29 @@ void Sequence::assignVariables() {
     }
 }
 
+//Returns map
 map<string, int> Sequence::getMap() {
     return variables;
 }
 
+//Returns the sequence vector
 vector<Expression> Sequence::getSequence() {
     return sequence;
 }
 
+//Returns size
 int Sequence::getSize() {
     return size;
 }
 
+//clears the sequence object
 void Sequence::clear() {
     sequence.clear();
     size = 0;
     orig = "";
 }
 
+//Appends to the sequence
 void Sequence::append(string input) {
     orig += input;
     int start = 0;
@@ -91,6 +98,7 @@ void Sequence::append(string input) {
     assignVariables();
 }
 
+//Returns the original input
 string Sequence::getOrig() {
     return orig;
 }

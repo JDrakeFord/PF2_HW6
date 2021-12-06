@@ -21,6 +21,7 @@ Expression::Expression(const string &s) {
     set(s);
 }
 
+//Sets the prefix variable
 void Expression::setPrefix() {
     stack<string> ops;
     for(unsigned int i = 0; i < postfix.size(); i++)
@@ -44,21 +45,9 @@ void Expression::setPrefix() {
         prefix.push_back(ops.top());
         ops.pop();
     }
-    /*
-    while(!ops.empty())
-    {
-        temp += ops.top();
-        temp += " ";
-        ops.pop();
-    }
-    for(unsigned int i = 0; i < temp.length(); i++)
-    {
-        string temp2 = "";
-        temp2 += temp[i];
-        prefix.push_back(temp2);
-    } */
 }
 
+//Prints the full Parenthesized expression
 void Expression::fullParen() {
     vector<string> postfixString;
     int size = postfix.size();
@@ -101,6 +90,7 @@ void Expression::fullParen() {
     cout << endl;
 }
 
+//Sets valid and returns a bool of the valid value. Is used as a combined getter / setter
 bool Expression::setValid() {
     enum States {expect_operand, expect_operator, done};
     bool eqtrue = false;
@@ -175,6 +165,7 @@ bool Expression::setValid() {
 
 }
 
+//Evaluates the expression
 int Expression::evaluate(bool &complete, map<string, int> variables) const {
     stack<Token> eval;
     for(unsigned int i = 0; i < postfix.size(); i++)
@@ -213,6 +204,7 @@ int Expression::evaluate(bool &complete, map<string, int> variables) const {
                 }
             }
         }
+        //Checks the map to see if we have a value for the identifier
         else if(postfix[i].get_type() == Token::Identifier)
         {
             if(variables.find(postfix[i].get_token()) != variables.end())
@@ -229,6 +221,7 @@ int Expression::evaluate(bool &complete, map<string, int> variables) const {
     return eval.top().value();
 }
 
+//Getter for type
 Expression::Exp_type Expression::getType() {
     return type;
 }
@@ -298,10 +291,12 @@ void Expression::set(const string &s) {
     }
 }
 
+//Gets the prefix vector
 vector<Token> Expression::get_prefix() const {
     return prefix;
 }
 
+//Sets the postfix variable
 void Expression::setPostfix() {
     postfix.clear();
     stack<Token> ops;
@@ -343,10 +338,12 @@ void Expression::setPostfix() {
     }
 }
 
+//Getter for postfix
 vector<Token> Expression::get_postfix() const {
     return postfix;
 }
 
+//Sets the type variable
 void Expression::setType() {
     for(unsigned int i = 0; i < tokenized.size(); i++)
     {
